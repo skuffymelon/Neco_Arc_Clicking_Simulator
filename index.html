@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>neco arc</title>
+    <link rel="stylesheet" href="indexstyle.css">
+</head>
+<body style="background-color: black;">
+    <div class="clicker">
+        <div id="section2_1" class="section2">
+            <h2></h2>
+        </div>
+        <div class="section">
+            <h1>neco arc clicking simulator</h1>
+        </div>
+        <div class="counter">
+            <h3 style="color: white;">0</h3>
+        </div>
+        <div class="sectionneco">
+            <button onclick="playsound();"><img src="necoarc.webp"></button>
+        </div>
+        <div class="shop">
+            <h1>neco arc shop!</h1>
+            <div class="itemarea">
+                <div class="item" >
+                    <button><img id="chaos" src="necoarcchaos.webp" alt=""></button>
+                    <h4>Price:50</h4>
+                </div>
+                <div class="item">
+                    <button><img id="destiny" src="NAD.webp" alt=""></button>
+                    <h4>Price:250</h4>
+                </div>
+                <div class="item">
+                    <button><img id="evolution" src="necoarcevolution.webp" alt=""></button>
+                    <h4>Price:1000</h4>
+                </div>
+            </div>
+            <div class="status">
+                <h5 id="itemstatus"></h5>
+            </div>
+        </div>
+    </div>
+    <div class="volslider">
+        <p>volume:</p>
+        <input type="range" min="0" max="100" value="70">
+        <div class="sliderVal">70</div>
+    </div>
+    
+    
+    <script> //game controller (kinda)
+        //main variables
+        var text = document.getElementById("section2_1"); //have fun text
+        var volume = 70 //volume
+        var necos = 0 //how many clicks ya got? 0? mid...
+        var necosperclick = 1
+        var tutorplayval = 0
+        var tutortext = document.querySelector("h2")
+        var textended = 0
+        slider = document.querySelector("input"); //volume slider input
+        sliderValue = document.querySelector(".sliderVal") //value box thing
+        necoarccounter = document.querySelector("h3") //haha the letter h
+
+        function hidetext() { //used for all hiding tip text conditions (hopefully)
+            text.style.animation = 'normal ease-in-out 3s out';
+            setTimeout(() => {
+                text.style.display = 'none';
+            }, 2950);
+        };
+
+        function playsound(){
+            // variables
+            var burenyu = new Audio();
+            burenyu.src = "necoarc.mp3";
+            var nya = new Audio();
+            nya.src = "necoarc1.mp3";
+            var dori = new Audio();
+            dori.src = "necoarc2.mp3";
+            var bling = new Audio("bling.mp3");
+            
+            // volume
+            burenyu.volume = volume / 150;
+            nya.volume = volume / 100;
+            dori.volume = volume / 100;
+            bling.volume = volume / 100;
+            //other stuff
+            
+            var randomsecret = Math.floor(Math.random() * 25);
+            console.log(randomsecret);
+            
+            //code
+            if (randomsecret == 1){
+                if (textended == 1) {
+                    tutorplayval++;
+                    if (tutorplayval == 1) {
+                        tutortext.innerHTML = "When a sound effect other than the normal (burenyu) plays, you get more clicks!"
+                        text.style.display = 'flex';
+                        text.style.animation = 'normal ease-in-out 2s in';
+                        setTimeout(() => {
+                            hidetext();
+                        }, 5600);
+                    } else
+                    {
+                      tutorplayval = 2;  
+                    }
+                }
+
+
+                nya.play();
+                bling.play();
+                necos = necos + (5 * necosperclick); // woah more neco
+                document.body.style.animation = 'cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s blingkeys normal';
+                setTimeout(() => {
+                    document.body.style.animation = 'none';
+                }, 500);
+            }
+            if (randomsecret == 21){
+                if (textended == 1) {
+                    tutorplayval++;
+                    if (tutorplayval == 1) {
+                        tutortext.innerHTML = "When a sound effect other than the normal (burenyu) plays, you get more clicks!"
+                        text.style.display = 'flex';
+                        text.style.animation = 'normal ease-in-out 2s in';
+                        setTimeout(() => {
+                            hidetext();
+                        }, 5600);
+                    } else
+                    {
+                      tutorplayval = 2;  
+                    }
+                }
+
+
+                dori.play();
+                bling.play();
+                necos = necos + (10 * necosperclick); // even more necos
+                document.body.style.animation = 'cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s blingkeys normal';
+                setTimeout(() => {
+                    document.body.style.animation = 'none';
+                }, 500);
+            } else
+            {
+                burenyu.play();
+            }
+            necos = necos + necosperclick;
+            necoarccounter.innerHTML = necos;
+        } 
+        function textend() {
+            setTimeout(() => {
+                textended = 1;
+            }, 20000);
+            
+        }
+
+        slider.oninput = function() {
+            volume = slider.value;
+            sliderValue.innerHTML = volume;
+        }
+        textend();
+    </script>
+    <script> //status update script
+        var statustext = document.querySelector("h5");
+        var chaositem = document.getElementById('chaos');
+        var destinyitem = document.getElementById('destiny');
+        var evolutionitem = document.getElementById('evolution');
+
+        function hoveritem(textvalue) {
+            statustext.style.animation = 'none'
+            var audiohover = new Audio("hover.mp3")
+            audiohover.play();
+            statustext.style.display = 'flex';
+            statustext.style.animation = 'normal cubic-bezier(0.075, 0.82, 0.165, 1) 0.25s in';
+            statustext.innerHTML = textvalue;
+        }
+        function itemup(textvalue) {
+            statustext.innerHTML = textvalue;
+                statustext.style.animation = 'none';
+        }
+
+        chaositem.onmouseover = function() {
+            hoveritem("Chaos Neco Arc: Gives you 1 CPS! (clicks per second)");
+        };
+        chaositem.onmouseleave = function() {
+            itemup("Chaos Neco Arc: Gives you 1 CPS! (clicks per second)");
+        };
+        destinyitem.onmouseover = function() {
+            hoveritem("Destiny Neco Arc: Gives you 2 CPC! (clicks per click)");
+        };
+        destinyitem.onmouseleave = function() {
+            itemup("Destiny Neco Arc: Gives you 2 CPC! (clicks per click)");
+        };
+        evolutionitem.onmouseover = function() {
+            hoveritem("Evolution Neco Arc: Gives you 5 CPC! (clicks per click)");
+        };
+        evolutionitem.onmouseleave = function() {
+            itemup("Evolution Neco Arc: Gives you 5 CPC! (clicks per click)");
+        };
+    </script>
+</body>
+</html>
