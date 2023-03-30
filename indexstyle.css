@@ -11,6 +11,14 @@ h1
     display: flex;
     justify-content: center;
 }
+h3
+{
+    font-size: 1.8vh;
+}
+h5
+{
+    font-size: 2vh;
+}
 button
 {
     display: flex;
