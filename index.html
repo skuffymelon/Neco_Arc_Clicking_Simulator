@@ -19,21 +19,21 @@
             <h3 style="color: white;">0</h3>
         </div>
         <div class="sectionneco">
-            <button onclick="playsound();"><img src="necoarc.webp"></button>
+            <button onclick="clickfunc();"><img src="necoarc.webp"></button>
         </div>
         <div class="shop">
             <h1>neco arc shop!</h1>
             <div class="itemarea">
                 <div class="item" >
-                    <button><img id="chaos" src="necoarcchaos.webp" alt=""></button>
+                    <button onclick="CPSGive(50, 1);"><img id="chaos" src="necoarcchaos.webp" alt=""></button>
                     <h4>Price:50</h4>
                 </div>
                 <div class="item">
-                    <button><img id="destiny" src="NAD.webp" alt=""></button>
+                    <button onclick="CPCGive(250,2)"><img id="destiny" src="NAD.webp" alt=""></button>
                     <h4>Price:250</h4>
                 </div>
                 <div class="item">
-                    <button><img id="evolution" src="necoarcevolution.webp" alt=""></button>
+                    <button onclick="CPCGive(1000,5)"><img id="evolution" src="necoarcevolution.webp" alt=""></button>
                     <h4>Price:1000</h4>
                 </div>
             </div>
@@ -68,8 +68,14 @@
                 text.style.display = 'none';
             }, 2950);
         };
+        function hidetextquick() { //used for all hiding tip text conditions (hopefully)
+            text.style.animation = 'normal ease-in-out 1s out';
+            setTimeout(() => {
+                text.style.display = 'none';
+            }, 950);
+        };
 
-        function playsound(){
+        function clickfunc(){
             // variables
             var burenyu = new Audio();
             burenyu.src = "necoarc.mp3";
@@ -78,16 +84,22 @@
             var dori = new Audio();
             dori.src = "necoarc2.mp3";
             var bling = new Audio("bling.mp3");
+            var njajanyja = new Audio("necoarc3.mp3");
+            var rarebling = new Audio("rarebling.mp3");
             
             // volume
             burenyu.volume = volume / 150;
             nya.volume = volume / 100;
             dori.volume = volume / 100;
             bling.volume = volume / 100;
+            rarebling.volume = volume / 100;
+            njajanyja.volume = volume / 100;
             //other stuff
             
             var randomsecret = Math.floor(Math.random() * 25);
-            console.log(randomsecret);
+            var randomsecret2 = Math.floor(Math.random() * 250);
+            var textline = Math.floor(Math.random() * 4);
+            
             
             //code
             if (randomsecret == 1){
@@ -139,12 +151,40 @@
                 setTimeout(() => {
                     document.body.style.animation = 'none';
                 }, 500);
-            } else
+            } 
+            if (randomsecret2 == 78) {
+                if (textended == 1) {
+                    if (textline == 1) {
+                        tutortext.innerHTML = "Woah! Thats rare!";
+                    } 
+                    if (textline == 2) {
+                        tutortext.innerHTML = "Damn, thats some good luck!";
+                    }
+                    if (textline == 3) {
+                        tutortext.innerHTML = "Thats " + 35 * necosperclick + " clicks for you!";
+                    }
+                    setTimeout(() => {
+                        text.style.display = 'flex';
+                        text.style.animation = 'normal ease-in-out 0.5s in';
+                        setTimeout(() => {
+                            hidetextquick();
+                        }, 1500);
+                    }, 10);
+                    necos = necos + (35 * necosperclick);
+                rarebling.play();
+                document.body.style.animation = 'cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s blingkeys normal';
+                setTimeout(() => {
+                    document.body.style.animation = 'none';
+                }, 500);
+                }
+            }else
             {
                 burenyu.play();
             }
             necos = necos + necosperclick;
             necoarccounter.innerHTML = necos;
+            // console.log(randomsecret2);
+            // console.log(randomsecret);
         } 
         function textend() {
             setTimeout(() => {
@@ -175,7 +215,8 @@
         }
         function itemup(textvalue) {
             statustext.innerHTML = textvalue;
-                statustext.style.animation = 'none';
+            statustext.style.animation = 'none';
+            statustext.style.display = 'none';
         }
 
         chaositem.onmouseover = function() {
@@ -196,6 +237,40 @@
         evolutionitem.onmouseleave = function() {
             itemup("Evolution Neco Arc: Gives you 5 CPC! (clicks per click)");
         };
+    </script>
+    <script>
+        var CPS = 0
+        var CPC = 1
+        function ClickPerSecondUpdate() {
+            necos = necos + CPS 
+            necoarccounter.innerHTML = necos;
+            necosperclick = CPC
+            setTimeout(() => {
+            ClickPerSecondUpdate();
+            }, 1000);
+        }
+        function CPSGive(price, CPSamount) {
+            if (necos > price)
+            {
+                necoarccounter.innerHTML = necos;
+                CPS = CPS + CPSamount;
+                necos = necos - price;
+            }
+            
+        }
+        function CPCGive(price, CPCamount) {
+            if (necos > price)
+            {
+                necoarccounter.innerHTML = necos;
+                CPC = CPC + CPCamount;
+                
+                necos = necos - price;
+            }
+            
+        }
+
+
+        ClickPerSecondUpdate();
     </script>
 </body>
 </html>
