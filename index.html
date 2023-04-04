@@ -4,38 +4,70 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>neco arc</title>
+    <title>Neco Arc Clicking Simulator</title>
     <link rel="stylesheet" href="indexstyle.css">
 </head>
 <body style="background-color: black;">
-    <div class="clicker">
-        <div id="section2_1" class="section2">
-            <h2></h2>
-        </div>
+    <div class="textarea">
         <div class="section">
             <h1>neco arc clicking simulator</h1>
+        </div>
+        <div id="section2_1" class="section2">
+            <h2></h2>
         </div>
         <div class="counter">
             <h3 style="color: white;">0</h3>
         </div>
+    </div>
+    <div class="clicker">
         <div class="sectionneco">
-            <button onclick="playsound();"><img src="necoarc.webp"></button>
+            <button onclick="clickfunc();"><img src="necoarc.webp"></button>
+        </div>
+        <div class="shopbutton">
+            <button id="shopbtn">Open Shop</button>
         </div>
         <div class="shop">
             <h1>neco arc shop!</h1>
             <div class="itemarea">
-                <div class="item" >
-                    <button><img id="chaos" src="necoarcchaos.webp" alt=""></button>
-                    <h4>Price:50</h4>
+                <div class="tier1">
+                    <div class="item">
+                        <button onclick="CPSGive(50, 1, 'Chaos');"><img id="chaos" src="necoarcchaos.webp" alt=""></button>
+                        <h4>Price:50</h4>
+                    </div>
+                    <div class="item">
+                        <button onclick="CPCGive(250,2)"><img id="destiny" src="NAD.webp" alt=""></button>
+                        <h4>Price:250</h4>
+                    </div>
+                    <div class="item">
+                        <button onclick="CPCGive(1000,10)"><img id="evolution" src="necoarcevolution.webp" alt=""></button>
+                        <h4>Price:1000</h4>
+                    </div>
+                    <div class="item">
+                        <button onclick="tierunlock(2500); CPSGive(2500,50, 'Bubbles'); "><img id="bubbles" src="necoarcbubbles.webp" alt=""></button>
+                        <h4>Price:2500</h4>
+                    </div>
                 </div>
-                <div class="item">
-                    <button><img id="destiny" src="NAD.webp" alt=""></button>
-                    <h4>Price:250</h4>
+                <div class="tier2">
+                    <div class="item">
+                        <button onclick="CPCGive(17500, 65);"><img id="necosleep" src="necoarcsleep.gif" alt=""></button>
+                        <h4>Price:17500</h4>
+                    </div>
+                    <div class="item">
+                        <button onclick="CPCGive(25000,200)"><img id="amazedneco" src="necoarcamazed.gif" alt=""></button>
+                        <h4>Price:25000</h4>
+                    </div>
+                    <div class="item">
+                        <button onclick="CPCGive(50000,450)"><img id="necodance" src="necoarcdance.gif" alt=""></button>
+                        <h4>Price:50000</h4>
+                    </div>
+                    <div class="item">
+                        <button onclick="CPSGive(75000,500)"><img id="necorun" src="necorun.gif" alt=""></button>
+                        <h4>Price:75000</h4>
+                    </div>
                 </div>
-                <div class="item">
-                    <button><img id="evolution" src="necoarcevolution.webp" alt=""></button>
-                    <h4>Price:1000</h4>
-                </div>
+            </div>
+            <div class="button">
+                <button onclick="tierpurchase(10000, 2);" id="tierbutton" ></button>
             </div>
             <div class="status">
                 <h5 id="itemstatus"></h5>
@@ -68,8 +100,14 @@
                 text.style.display = 'none';
             }, 2950);
         };
+        function hidetextquick() { //used for all hiding tip text conditions (hopefully)
+            text.style.animation = 'normal ease-in-out 1s out';
+            setTimeout(() => {
+                text.style.display = 'none';
+            }, 950);
+        };
 
-        function playsound(){
+        function clickfunc(){
             // variables
             var burenyu = new Audio();
             burenyu.src = "necoarc.mp3";
@@ -78,16 +116,22 @@
             var dori = new Audio();
             dori.src = "necoarc2.mp3";
             var bling = new Audio("bling.mp3");
+            var njajanyja = new Audio("necoarc3.mp3");
+            var rarebling = new Audio("rarebling.mp3");
             
             // volume
             burenyu.volume = volume / 150;
             nya.volume = volume / 100;
             dori.volume = volume / 100;
             bling.volume = volume / 100;
+            rarebling.volume = volume / 100;
+            njajanyja.volume = volume / 100;
             //other stuff
             
             var randomsecret = Math.floor(Math.random() * 25);
-            console.log(randomsecret);
+            var randomsecret2 = Math.floor(Math.random() * 250);
+            var textline = Math.floor(Math.random() * 4);
+            
             
             //code
             if (randomsecret == 1){
@@ -139,12 +183,40 @@
                 setTimeout(() => {
                     document.body.style.animation = 'none';
                 }, 500);
-            } else
+            } 
+            if (randomsecret2 == 78) {
+                if (textended == 1) {
+                    if (textline == 1) {
+                        tutortext.innerHTML = "Woah! Thats rare!";
+                    } 
+                    if (textline == 2) {
+                        tutortext.innerHTML = "Damn, thats some good luck!";
+                    }
+                    if (textline == 3) {
+                        tutortext.innerHTML = "Thats " + 35 * necosperclick + " clicks for you!";
+                    }
+                    setTimeout(() => {
+                        text.style.display = 'flex';
+                        text.style.animation = 'normal ease-in-out 0.5s in';
+                        setTimeout(() => {
+                            hidetextquick();
+                        }, 1500);
+                    }, 10);
+                    necos = necos + (35 * necosperclick);
+                rarebling.play();
+                document.body.style.animation = 'cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s blingkeys normal';
+                setTimeout(() => {
+                    document.body.style.animation = 'none';
+                }, 500);
+                }
+            }else
             {
                 burenyu.play();
             }
             necos = necos + necosperclick;
             necoarccounter.innerHTML = necos;
+            // console.log(randomsecret2);
+            // console.log(randomsecret);
         } 
         function textend() {
             setTimeout(() => {
@@ -164,6 +236,11 @@
         var chaositem = document.getElementById('chaos');
         var destinyitem = document.getElementById('destiny');
         var evolutionitem = document.getElementById('evolution');
+        var bubblesitem = document.getElementById('bubbles');
+        var necosleep = document.getElementById('necosleep');
+        var amazedneco = document.getElementById('amazedneco');
+        var necodance = document.getElementById('necodance');
+        var necorun = document.getElementById('necorun');
 
         function hoveritem(textvalue) {
             statustext.style.animation = 'none'
@@ -175,7 +252,8 @@
         }
         function itemup(textvalue) {
             statustext.innerHTML = textvalue;
-                statustext.style.animation = 'none';
+            statustext.style.animation = 'none';
+            statustext.style.display = 'none';
         }
 
         chaositem.onmouseover = function() {
@@ -191,11 +269,174 @@
             itemup("Destiny Neco Arc: Gives you 2 CPC! (clicks per click)");
         };
         evolutionitem.onmouseover = function() {
-            hoveritem("Evolution Neco Arc: Gives you 5 CPC! (clicks per click)");
+            hoveritem("Evolution Neco Arc: Gives you 10 CPC! (clicks per click)");
         };
         evolutionitem.onmouseleave = function() {
-            itemup("Evolution Neco Arc: Gives you 5 CPC! (clicks per click)");
+            itemup("Evolution Neco Arc: Gives you 10 CPC! (clicks per click)");
         };
+        bubblesitem.onmouseover = function() {
+            hoveritem("Bubbles Neco Arc: Gives you 50 CPS! (clicks per second)");
+        };
+        bubblesitem.onmouseleave = function() {
+            itemup("Bubbles Neco Arc: Gives you 50 CPS! (clicks per second)");
+        };
+    </script>
+    <script> //cps cpc scripts
+        //afx
+
+        var chaos_nyanyanya = new Audio("chaosnecoarc.mp3");
+        var chaos_njanyanja = new Audio("chaosnecoarc1.mp3");
+        var chaos_oi = new Audio("chaosnecoarc2.mp3");
+        var bubbles_nod = new Audio("bubblesnecoarc.mp3");
+
+        
+        //main script
+        var CPS = 0
+        var CPC = 1
+        function ClickPerSecondUpdate() {
+            // volume
+            chaos_njanyanja.volume = volume / 100;
+            chaos_nyanyanya.volume = volume / 100;
+            chaos_oi.volume = volume / 100;
+            bubbles_nod.volume = volume / 100;
+            // cps
+            necos = necos + CPS 
+            necoarccounter.innerHTML = necos;
+            necosperclick = CPC
+            setTimeout(() => {
+            ClickPerSecondUpdate();
+            }, 1000);
+        }
+        function CPSGive(price, CPSamount, NecoArcType) {
+            if (necos > price)
+            {
+                var randomafx = Math.floor(Math.random(1) * 4);
+                CPS = CPS + CPSamount;
+                necos = necos - price;
+                necoarccounter.innerHTML = necos;
+                if (NecoArcType == "Chaos") {
+                    if (randomafx == 1) {
+                        chaos_nyanyanya.play();
+                        chaositem.style.animation = "normal cubic-bezier(0.075, 0.82, 0.165, 1) 0.75s itemiconscale";
+                        setTimeout(() => {
+                            chaositem.style.animation = "none";
+                        }, 750);
+                    }
+                    if (randomafx == 2) {
+                        chaos_njanyanja.play();
+                    }
+                    if (randomafx == 3) {
+                        chaos_oi.play();
+                    }
+                }
+                if (NecoArcType == "Bubbles") {
+                    if (randomafx == 1) {
+                        bubbles_nod.play();
+                        bubblesitem.style.animation = "normal cubic-bezier(0.075, 0.82, 0.165, 1) 0.75s itemiconscale";
+                        setTimeout(() => {
+                            bubblesitem.style.animation = "none";
+                        }, 750);
+                    }
+                }
+            }
+            
+        }
+        function CPCGive(price, CPCamount, NecoArcType) {
+            if (necos > price)
+            {
+                var randomafx = Math.floor(Math.random() * 4);
+                CPC = CPC + CPCamount;
+                necos = necos - price;
+                necoarccounter.innerHTML = necos;
+            }
+            
+        }
+
+
+        ClickPerSecondUpdate();
+    </script>
+    <script> //open/close shop
+        var shopbutton = document.getElementById("shopbtn");
+        var shop = document.querySelector(".shop");
+        var bool = false;
+
+        function OpenShop() {
+                shop.style.display = "flex";
+                shop.style.animation = "normal cubic-bezier(0.075, 0.82, 0.165, 1) 1s shopopen";
+                shopbutton.innerHTML = "Close Shop"
+                setTimeout(() => {
+                    bool = true;
+                }, 1000);
+        }
+        function CloseShop() {
+                shop.style.animation = "normal cubic-bezier(0.075, 0.82, 0.165, 1) 1s shopclose";
+                shopbutton.innerHTML = "Open Shop"
+                setTimeout(() => {
+                    bool = false;
+                    shop.style.display = "none";
+                }, 1000);
+            }
+        shopbutton.onclick = function() {
+            if (bool == false) {
+                OpenShop();
+            } else {
+                CloseShop();
+            }
+        }
+    </script>
+    <script> //tier unlock
+        //main stuff
+        var tier1 = document.querySelector(".tier1")
+        var tier2 = document.querySelector(".tier2")
+        var button = document.getElementById("tierbutton")
+        var tierunlockbool = 0
+
+        function tierboolrevive() {
+            if (tierunlockbool > 1) {
+                tierunlockbool = 0
+            }
+        }
+        function tierunlock(price) {
+            if (necos > price) {
+                console.log(necos);
+                tierunlockbool++
+            if (tierunlockbool == 1) {
+                button.innerHTML = "Tier 2: Price 10000";
+                button.style.display = "flex";
+                button.style.animation = "normal cubic-bezier(0.075, 0.82, 0.165, 1) 1s buttonappear";
+                setTimeout(() => {
+                    button.style.animation = 'none';
+                }, 1000);
+            }
+            }
+        }
+        function tieranimation(tiertotransitionfrom, tiertotransitionto) {
+            tiertotransitionfrom.style.animation = 'none';
+            tiertotransitionto.style.animation = 'none';
+            tiertotransitionfrom.style.animation = 'normal cubic-bezier(0.075, 0.82, 0.165, 1) 1s tieranim1'
+            button.style.animation = 'normal cubic-bezier(0.075, 0.82, 0.165, 1) 2s buttondissapear'
+            setTimeout(() => {
+                tiertotransitionfrom.style.display = 'none';
+                tiertotransitionto.style.animation = 'normal cubic-bezier(0.075, 0.82, 0.165, 1) 1s tieranim2'
+                tiertotransitionto.style.display = 'flex';
+            }, 995);
+            setTimeout(() => {
+                button.style.display = 'none';
+                button.style.animation = 'none';
+            }, 2000);
+            setTimeout(() => {
+                tiertotransitionfrom.style.animation = 'none';
+                tiertotransitionto.style.animation = 'none';
+            }, 2500);
+        }
+        function tierpurchase(price, tiernumber) {
+            if (necos > price) {
+                necos = necos - price
+                if (tiernumber == 2) {
+                    tieranimation(tier1, tier2)
+                }
+            }
+        }
     </script>
 </body>
 </html>
